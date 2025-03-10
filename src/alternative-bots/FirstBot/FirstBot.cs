@@ -2,83 +2,233 @@ using System;
 using System.Drawing;
 using Robocode.TankRoyale.BotApi;
 using Robocode.TankRoyale.BotApi.Events;
+using System.Collections.Generic;
 
-public class FirstBot : Bot
-{
-    bool peek; // Don't turn if there's a bot there
-    double moveAmount; // How much to move
+//heuristic : jarak musuh dan jarak ke dinding
+//objektif : keberlangsungan hidup (karena berada pada zona aman), kekuatan tembakan (bonus) 
 
-    // The main method starts our bot
-    static void Main()
-    {
+public class EnemyData{
+    public int Id { get; set; } // Ubah ke int dari string
+    public double X { get; set; }
+    public double Y { get; set; }
+    public double Energy { get; set; }
+    public long LastSeenTime { get; set; }
+}
+
+public class Position{
+    public double X { get; set; }
+    public double Y { get; set; }
+    
+    public Position(double x, double y){
+        X = x;
+        Y = y;
+    }
+}
+
+public class FirstBot : Bot{
+    // Dictionary untuk melacak musuh - ubah key menjadi int
+    private Dictionary<int, EnemyData> listEnemies;
+
+    static void Main(){
         new FirstBot().Start();
     }
 
-    // Constructor, which loads the bot config file
     FirstBot() : base(BotInfo.FromFile("FirstBot.json")) { }
 
-    // Called when a new round is started -> initialize and do some movement
-    public override void Run()
-    {
+    public override void Run(){
         //bot color
         BodyColor = Color.FromArgb(0xFF, 0xFF, 0xFF);   // Putih
         TurretColor = Color.FromArgb(0xFF, 0x00, 0x00); // Merah
+        GunColor = Color.FromArgb(0x00, 0x00, 0x00); // Hitam
         RadarColor = Color.FromArgb(0x64, 0xA7, 0xFF);  // Biru Muda
         BulletColor = Color.FromArgb(0xFF, 0xFF, 0x64); // Kuning
         ScanColor = Color.FromArgb(0x90, 0xEE, 0x90);   // Hijau Muda
 
-        // Initialize moveAmount to the maximum possible for the arena
-        moveAmount = Math.Max(ArenaWidth, ArenaHeight);
-        // Initialize peek to false
-        peek = false;
+        listEnemies = new Dictionary<int, EnemyData>();
 
-        // turn to face a wall.
-        // `Direction % 90` means the remainder of Direction divided by 90.
-        TurnRight(Direction % 90);
-        Forward(moveAmount);
-
-        // Turn the gun to turn right 90 degrees.
-        peek = true;
-        TurnGunRight(90);
-        TurnRight(90);
+        int init = 1;
 
         // Main loop
-        while (IsRunning)
+        while (IsRunning){
+
+            if(init == 1){
+                TurnRight(90);
+                TurnLeft(90);
+                Position safeZoneInit = FindSafeZone();
+                GoToSafeZone(safeZoneInit);
+            }
+
+            if (listEnemies.Count > 0){
+                if (!IsInSafeZone()) {
+                    Position safeZone = FindSafeZone();
+                    GoToSafeZone(safeZone);
+                } 
+                else{
+                    OnSafeZone();
+                }
+            }
+        }
+        init+=1;
+    }
+
+    public override void OnScannedBot(ScannedBotEvent e){
+        // Cari Posisi Musuh berdasarkan koordinat
+        double distance = DistanceTo(e.X, e.Y);
+        
+        // Simpan data musuh - ScannedBotId sekarang bertipe int
+        listEnemies[e.ScannedBotId] = new EnemyData
         {
-            // Peek before we turn when forward() completes.
-            peek = true;
-            // Move up the wall
-            Forward(moveAmount);
-            // Don't peek now
-            peek = false;
-            // Turn to the next wall
-            TurnRight(90);
+            Id = e.ScannedBotId,
+            X = e.X,
+            Y = e.Y,
+            Energy = e.Energy,
+            LastSeenTime = TurnNumber
+        };
+        
+        // Serang musuh jika dalam jarak aman, evaluasi jarak
+        if (IsInSafeZone() && distance > 100){
+            AttEnemy(listEnemies[e.ScannedBotId]);
         }
     }
 
-    // We hit another bot -> move away a bit
-    public override void OnHitBot(HitBotEvent e)
-    {
-        // If he's in front of us, set back up a bit.
-        var bearing = BearingTo(e.X, e.Y);
-        if (bearing > -90 && bearing < 90)
-        {
-            Back(100);
-        }
-        else
-        { // else he's in back of us, so set ahead a bit.
-            Forward(100);
-        }
+    public override void OnHitByBullet(HitByBulletEvent e){
+        // Jika terkena peluru, pertimbangkan untuk mencari safe zone baru
+        Position newSafeZone = FindSafeZone();
+        GoToSafeZone(newSafeZone);
     }
 
-    // We scanned another bot -> fire!
-    public override void OnScannedBot(ScannedBotEvent e)
-    {
-        SetFire(2);
-        // Note that scan is called automatically when the bot is turning.
-        // By calling it manually here, we make sure we generate another scan event if there's a bot
-        // on the next wall, so that we do not start moving up it until it's gone.
-        if (peek)
-            Rescan();
+    //Fungsi Kandidat
+    private Position FindSafeZone(){
+        List<Position> possiblePos = new List<Position>();
+
+        double width = ArenaWidth;
+        double height = ArenaHeight;
+
+        double distanceFromWall = 100; //jarak minimum dari dinding, agar tidak menabrak dinding
+
+        for(double x = distanceFromWall; x < width - distanceFromWall; x+=50){
+            for(double y = distanceFromWall; y < height - distanceFromWall; y+=50){
+                possiblePos.Add(new Position(x,y));
+            }
+        }
+
+        return SelectPos(possiblePos);
+    }
+
+    //Fungsi Seleksi
+    private Position SelectPos(List<Position> possiblePos){
+        Position safePos = null;
+        double maxSafeScore = -1;
+
+        foreach(Position pos in possiblePos){
+
+            double safeScore = countSafeScore(pos);
+
+            if(safeScore > maxSafeScore){
+                maxSafeScore = safeScore;
+                safePos = pos;
+            }
+        }
+
+        return safePos;
+    }
+
+    private double countSafeScore(Position pos){
+        double score = 100; //perlu revisi tergantung bagaimana keberhasilan algoritma nantinya
+
+        foreach (var enemyData in listEnemies.Values){
+
+            double disToEnemy = DistanceTo(pos.X, pos.Y);
+
+            score += disToEnemy*0.5; //cek lagi penting mana jauh dari musuh atau jauh dari tembok
+
+            if(disToEnemy < 100){
+                score -= 200;
+            }
+        }
+
+        double disToWall = Math.Min(Math.Min(pos.X, ArenaWidth - pos.X), Math.Min(pos.Y, ArenaHeight - pos.Y));
+
+        score += disToWall * 0.3;
+        
+        return score;
+    }
+
+    private void GoToSafeZone(Position safeZone){
+        double bearingToTarget = BearingTo(safeZone.X, safeZone.Y);
+        SetTurnRight(bearingToTarget);
+        SetForward(DistanceTo(safeZone.X, safeZone.Y));
+    }
+    
+    private void OnSafeZone(){
+        TurnRight(90);
+        TurnLeft(90);
+
+        if(listEnemies.Count > 0){
+            var nearEnemy = FindNearest();
+
+            if(DistanceTo(nearEnemy.X, nearEnemy.Y) < 150){ //butuh revisi tergantung posibilitas kemenangan
+                Position newSafeZone = FindSafeZone();
+                GoToSafeZone(newSafeZone);
+            }
+            else{
+                AttEnemy(nearEnemy);
+            }
+        }
+    }
+    
+    // Mencari musuh terdekat
+    private EnemyData FindNearest() {
+        EnemyData nearest = null;
+        double minDistance = Double.PositiveInfinity;
+        
+        foreach (var enemy in listEnemies.Values) {
+            double distance = DistanceTo(enemy.X, enemy.Y);
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearest = enemy;
+            }
+        }
+        
+        return nearest;
+    }
+    
+    // Menyerang musuh
+    private void AttEnemy(EnemyData enemy) { //skema menembaknya perlu diubah
+        // Menghitung bearing ke musuh untuk gun
+        double gunBearing = GunBearingTo(enemy.X, enemy.Y);
+        
+        // Memutar gun ke arah musuh
+        SetTurnGunRight(gunBearing);
+        
+        double distance = DistanceTo(enemy.X, enemy.Y);
+        double firePower = Math.Min(3, Math.Max(0.1, 400 / distance)); // Menyesuaikan kekuatan tembakan berdasarkan jarak, evaluasi nanti
+        
+        Fire(firePower);
+    }
+    
+    // Memeriksa apakah bot berada di safe zone
+    private bool IsInSafeZone(){
+        // Periksa jarak dari dinding
+        double distanceToWall = Math.Min(Math.Min(X, ArenaWidth - X), Math.Min(Y, ArenaHeight - Y));
+        
+        if (distanceToWall < 150){
+            return false; // evaluasi nanti
+        }
+        
+        // Periksa jarak dari semua musuh
+        foreach (var enemy in listEnemies.Values) {
+            double distanceToEnemy = DistanceTo(enemy.X, enemy.Y);
+            if (distanceToEnemy < 150) {
+                return false; // evaluasi nanti
+            }
+        }
+        
+        return true;
+    }
+    
+    // Fungsi ToRadians dipertahankan karena mungkin diperlukan
+    private double ToRadians(double degrees) {
+        return degrees * Math.PI / 180.0;
     }
 }
