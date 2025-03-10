@@ -3,14 +3,6 @@ using System.Drawing;
 using Robocode.TankRoyale.BotApi;
 using Robocode.TankRoyale.BotApi.Events;
 
-// ------------------------------------------------------------------
-// FirstBot
-// ------------------------------------------------------------------
-// A sample bot original made for Robocode by Mathew Nelson.
-// Ported to Robocode Tank Royale by Flemming N. Larsen.
-//
-// Moves around the outer edge with the gun facing in.
-// ------------------------------------------------------------------
 public class FirstBot : Bot
 {
     bool peek; // Don't turn if there's a bot there
@@ -28,12 +20,12 @@ public class FirstBot : Bot
     // Called when a new round is started -> initialize and do some movement
     public override void Run()
     {
-        // Set colors
-        BodyColor = Color.Black;
-        TurretColor = Color.Black;
-        RadarColor = Color.Orange;
-        BulletColor = Color.Cyan;
-        ScanColor = Color.Cyan;
+        //bot color
+        BodyColor = Color.FromArgb(0xFF, 0xFF, 0xFF);   // Putih
+        TurretColor = Color.FromArgb(0xFF, 0x00, 0x00); // Merah
+        RadarColor = Color.FromArgb(0x64, 0xA7, 0xFF);  // Biru Muda
+        BulletColor = Color.FromArgb(0xFF, 0xFF, 0x64); // Kuning
+        ScanColor = Color.FromArgb(0x90, 0xEE, 0x90);   // Hijau Muda
 
         // Initialize moveAmount to the maximum possible for the arena
         moveAmount = Math.Max(ArenaWidth, ArenaHeight);

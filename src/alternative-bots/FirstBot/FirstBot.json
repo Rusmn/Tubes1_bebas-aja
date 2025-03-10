@@ -1,14 +1,15 @@
 {
-  "name": "alt bot 1",
+  "name": "bebas aja",
   "version": "1.0",
   "authors": [
-    "human"
+    "Muhammad Alfansya",
+    "Muh. Rusmin Nurwadin",
+    "Guntara Hambali"
   ],
-  "description": "Moves to a corner, then swings the gun back and forth. If it dies, it tries a new corner in the next round.",
+  "description": "find the safe zone, based on enemy positition",
   "homepage": "",
   "countryCodes": [
-    "us",
-    "dk"
+    "id"
   ],
   "platform": ".Net 6.0",
   "programmingLang": "C# 10.0"
