@@ -818,19 +818,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Alfansya\\.nuget\\packages\\": {}
+    "C:\\Users\\ASUS TUF GAMING F15\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Alfansya\\OneDrive\\Documents\\Kuliah\\Semester_4\\Stima\\TUBES1\\projeekkkkkkkkk\\botTry1\\botTry1.csproj",
+      "projectUniqueName": "D:\\tubes-stima\\Tubes1_bebas-aja\\src\\alternative-bots\\botTry1\\botTry1.csproj",
       "projectName": "botTry1",
-      "projectPath": "C:\\Users\\Alfansya\\OneDrive\\Documents\\Kuliah\\Semester_4\\Stima\\TUBES1\\projeekkkkkkkkk\\botTry1\\botTry1.csproj",
-      "packagesPath": "C:\\Users\\Alfansya\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Alfansya\\OneDrive\\Documents\\Kuliah\\Semester_4\\Stima\\TUBES1\\projeekkkkkkkkk\\botTry1\\obj\\",
+      "projectPath": "D:\\tubes-stima\\Tubes1_bebas-aja\\src\\alternative-bots\\botTry1\\botTry1.csproj",
+      "packagesPath": "C:\\Users\\ASUS TUF GAMING F15\\.nuget\\packages\\",
+      "outputPath": "D:\\tubes-stima\\Tubes1_bebas-aja\\src\\alternative-bots\\botTry1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Alfansya\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\ASUS TUF GAMING F15\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -888,13 +888,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
-    }
-  ]
+  }
 }

@@ -9,38 +9,36 @@ using Robocode.TankRoyale.BotApi.Events;
 //heuristic : jarak musuh dan jarak ke dinding
 //objektif : keberlangsungan hidup (karena berada pada zona aman), kekuatan tembakan (bonus) 
 
-public class Position{
+public class Position {
     public double X { get; set; }
     public double Y { get; set; }
-    public Position(double x, double y){
+    public Position(double x, double y) {
         X = x;
         Y = y;
     }
 }
 
-public class FirstBot : Bot{
+public class FirstBot : Bot {
     private ScannedBotEvent? lastScannedBot;
     private const double wallDist = 10; // wall distance -> jarak aman dari dinding
     private const double enemyDist = 100; //enemy distance -> jarak aman dari musuh
     
-    private Position currentSafezone = null; //current Safe Zone
+    private Position? currentSafezone = null; //current Safe Zone
     private long cekZone = 0; //last safe zone check
-    private bool needMove = true; //need to movesafe zone
-    //private bool movingForward = true;
-    //private bool stopOnScan = false; //Stop when see enemy
+    private bool needMove = true; //need to move to safe zone
     private int gunDir = 1; //gun Direction
     private double enemyX = -1; //last enemy X
     private double enemyY = -1; //last enemy Y
     private long scanTime = -1; //last enemy seen
     private Random rand = new Random();
     
-    static void Main(){
+    static void Main() {
         new FirstBot().Start();
     }
 
     FirstBot() : base(BotInfo.FromFile("FirstBot.json")) { }
 
-    public override void Run(){
+    public override void Run() {
         // Set warna bot
         BodyColor = Color.FromArgb(0xFF, 0xFF, 0xFF);   // Putih
         TurretColor = Color.FromArgb(0xFF, 0x00, 0x00); // Merah
@@ -50,8 +48,8 @@ public class FirstBot : Bot{
         ScanColor = Color.FromArgb(0x90, 0xEE, 0x90);   // Hijau Muda
         
         // Loop utama
-        while (IsRunning){
-            if (needMove){
+        while (IsRunning) {
+            if (needMove) {
                 currentSafezone = FindZone();
                 cekZone = TurnNumber;
                 needMove = false;
@@ -59,10 +57,10 @@ public class FirstBot : Bot{
                 GoToZone();
             }
             
-            TurnGunRight(10);
+            TurnGunRight(10 * gunDir);
             
             //Ubah arah putaran senjata secara berkala
-            if (TurnNumber % 11 == 0){ 
+            if (TurnNumber % 11 == 0) { 
                 gunDir *= -1;
             }
             
@@ -74,11 +72,12 @@ public class FirstBot : Bot{
             }
         }
     }
-    private List<Position> GenPos(){ //generate Position
+
+    private List<Position> GenPos() { //generate Position
         List<Position> candidates = new List<Position>();
         
-        for (double x = wallDist; x < ArenaWidth - wallDist; x += 20){
-            for (double y = wallDist; y < ArenaHeight - wallDist; y += 20){
+        for (double x = wallDist; x < ArenaWidth - wallDist; x += 20) {
+            for (double y = wallDist; y < ArenaHeight - wallDist; y += 20) {
                 candidates.Add(new Position(x, y));
             }
         }
@@ -86,17 +85,17 @@ public class FirstBot : Bot{
         return candidates;
     }
     
-    private bool IsSafe(Position pos){
+    private bool IsSafe(Position pos) {
         double distanceToWall = Math.Min(Math.Min(pos.X, ArenaWidth - pos.X), Math.Min(pos.Y, ArenaHeight - pos.Y));
         
-        if (distanceToWall < wallDist){
+        if (distanceToWall < wallDist) {
             return false; // Terlalu dekat dengan dinding
         }
         
-        if (scanTime > 0 && TurnNumber - scanTime < 30){
+        if (scanTime > 0 && TurnNumber - scanTime < 30) {
             double distanceToEnemy = Math.Sqrt(Math.Pow(pos.X - enemyX, 2) + Math.Pow(pos.Y - enemyY, 2));
             
-            if (distanceToEnemy < enemyDist){
+            if (distanceToEnemy < enemyDist) {
                 return false; // Terlalu dekat dengan musuh
             }
         }
@@ -104,13 +103,13 @@ public class FirstBot : Bot{
         return true; // Posisi aman
     }
     
-    private double CalcScore(Position pos){ //calculate safety score (skor yang dimiliki pos)
+    private double CalcScore(Position pos) { //calculate safety score (skor yang dimiliki pos)
         double score = 100; // Skor minimum/dasar
 
         double distanceToWall = Math.Min(Math.Min(pos.X, ArenaWidth - pos.X), Math.Min(pos.Y, ArenaHeight - pos.Y));
         score += distanceToWall * 2;
         
-        if (scanTime > 0 && TurnNumber - scanTime < 30){
+        if (scanTime > 0 && TurnNumber - scanTime < 30) {
             double distanceToEnemy = Math.Sqrt(Math.Pow(pos.X - enemyX, 2) + Math.Pow(pos.Y - enemyY, 2));
             score += distanceToEnemy * 0.5;
         }
@@ -120,22 +119,22 @@ public class FirstBot : Bot{
         
         double distanceFromCurrent = Math.Sqrt(Math.Pow(pos.X - X, 2) + Math.Pow(pos.Y - Y, 2));
         
-        if (distanceFromCurrent > 250){
+        if (distanceFromCurrent > 250) {
             score -= (distanceFromCurrent - 300) * 0.2;
         }
         
         return score;
     }
     
-    private Position SelectBest(List<Position> candidates){ //memilih best pos
-        Position bestPosition = null;
+    private Position? SelectBest(List<Position> candidates) { //memilih best pos
+        Position? bestPosition = null;
         double bestScore = double.MinValue;
         
-        foreach (Position pos in candidates){
-            if (IsSafe(pos)){
+        foreach (Position pos in candidates) {
+            if (IsSafe(pos)) {
                 double score = CalcScore(pos);
                 
-                if (score > bestScore){
+                if (score > bestScore) {
                     bestScore = score;
                     bestPosition = pos;
                 }
@@ -145,7 +144,7 @@ public class FirstBot : Bot{
         return bestPosition;
     }
     
-    private Position FindZone(){ //mencari safe zone
+    private Position? FindZone() { //mencari safe zone
         List<Position> candidates = GenPos();
         return SelectBest(candidates);
     }
@@ -159,11 +158,11 @@ public class FirstBot : Bot{
         
         double distance = DistanceTo(currentSafezone.X, currentSafezone.Y);
         
-        // Zig-zag movement, PERLU EVALUASI.
+        // Zig-zag movement
         while (distance > 0) {
             double moveDist = Math.Min(50, distance);
             SetForward(moveDist);
-            SetTurnRight(rand.Next(-15, 15)); // Random angle untuk menghindari peluru, jangan terlalu besar, karena nanti melenceng jauh dari safezone.
+            SetTurnRight(rand.Next(-15, 15)); // Random angle untuk menghindari peluru
             Go();
             distance -= moveDist;
         }
@@ -227,12 +226,12 @@ public class FirstBot : Bot{
     }
     
     public override void OnHitBot(HitBotEvent e) {
-        if (e.IsRammed){
+        if (e.IsRammed) {
             SetBack(rand.Next(50, 150));
             SetTurnRight(rand.Next(30, 90)); 
             Go();
         } 
-        else{
+        else {
             Fire(3);
             SetTurnRight(rand.Next(45, 90));
             SetForward(rand.Next(50, 150));
@@ -241,8 +240,8 @@ public class FirstBot : Bot{
         needMove = true;
     }
 
-    public override void OnBulletHit(BulletHitBotEvent e){
-        if (scanTime > 0 && TurnNumber - scanTime < 5){
+    public override void OnBulletHit(BulletHitBotEvent e) {
+        if (scanTime > 0 && TurnNumber - scanTime < 5) {
             double gunBearing = GunBearingTo(enemyX, enemyY);
             SetTurnGunRight(gunBearing);
             Go();

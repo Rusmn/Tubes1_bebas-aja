@@ -1,0 +1,46 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "alternative-bots", "alternative-bots", "{A3963A42-BA02-1665-FEE3-9A6867D26CB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBoss", "src\alternative-bots\BigBoss\BigBoss.csproj", "{7BEC786C-E12B-4E08-8E5E-BBFCEEAEFB1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "botTry1", "src\alternative-bots\botTry1\botTry1.csproj", "{456383F1-62F1-4EAE-4D2B-C066FD1CA1CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstBot", "src\alternative-bots\FirstBot\FirstBot.csproj", "{26BBD032-AE3C-FCAF-2F36-234C8D7A924D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7BEC786C-E12B-4E08-8E5E-BBFCEEAEFB1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BEC786C-E12B-4E08-8E5E-BBFCEEAEFB1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BEC786C-E12B-4E08-8E5E-BBFCEEAEFB1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BEC786C-E12B-4E08-8E5E-BBFCEEAEFB1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{456383F1-62F1-4EAE-4D2B-C066FD1CA1CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{456383F1-62F1-4EAE-4D2B-C066FD1CA1CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{456383F1-62F1-4EAE-4D2B-C066FD1CA1CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{456383F1-62F1-4EAE-4D2B-C066FD1CA1CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26BBD032-AE3C-FCAF-2F36-234C8D7A924D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26BBD032-AE3C-FCAF-2F36-234C8D7A924D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26BBD032-AE3C-FCAF-2F36-234C8D7A924D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26BBD032-AE3C-FCAF-2F36-234C8D7A924D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A3963A42-BA02-1665-FEE3-9A6867D26CB0} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{7BEC786C-E12B-4E08-8E5E-BBFCEEAEFB1D} = {A3963A42-BA02-1665-FEE3-9A6867D26CB0}
+		{456383F1-62F1-4EAE-4D2B-C066FD1CA1CF} = {A3963A42-BA02-1665-FEE3-9A6867D26CB0}
+		{26BBD032-AE3C-FCAF-2F36-234C8D7A924D} = {A3963A42-BA02-1665-FEE3-9A6867D26CB0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {62628C76-B8B1-4B98-9FE1-D35E49DC5EBF}
+	EndGlobalSection
+EndGlobal

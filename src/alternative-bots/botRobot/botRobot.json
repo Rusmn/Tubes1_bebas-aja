@@ -1,0 +1,10 @@
+{
+  "name": "botRobot",
+  "version": "1.0",
+  "authors": ["alfansya"],
+  "description": "masi coba coba",
+  "homepage": "",
+  "countryCodes": ["id"],
+  "platform": ".Net 9.0",
+  "programmingLang": "C# 10.0"
+}

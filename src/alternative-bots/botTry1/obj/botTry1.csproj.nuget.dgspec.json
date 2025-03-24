@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alfansya\\OneDrive\\Documents\\Kuliah\\Semester_4\\Stima\\TUBES1\\projeekkkkkkkkk\\botTry1\\botTry1.csproj": {}
+    "D:\\tubes-stima\\Tubes1_bebas-aja\\src\\alternative-bots\\botTry1\\botTry1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alfansya\\OneDrive\\Documents\\Kuliah\\Semester_4\\Stima\\TUBES1\\projeekkkkkkkkk\\botTry1\\botTry1.csproj": {
+    "D:\\tubes-stima\\Tubes1_bebas-aja\\src\\alternative-bots\\botTry1\\botTry1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alfansya\\OneDrive\\Documents\\Kuliah\\Semester_4\\Stima\\TUBES1\\projeekkkkkkkkk\\botTry1\\botTry1.csproj",
+        "projectUniqueName": "D:\\tubes-stima\\Tubes1_bebas-aja\\src\\alternative-bots\\botTry1\\botTry1.csproj",
         "projectName": "botTry1",
-        "projectPath": "C:\\Users\\Alfansya\\OneDrive\\Documents\\Kuliah\\Semester_4\\Stima\\TUBES1\\projeekkkkkkkkk\\botTry1\\botTry1.csproj",
-        "packagesPath": "C:\\Users\\Alfansya\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alfansya\\OneDrive\\Documents\\Kuliah\\Semester_4\\Stima\\TUBES1\\projeekkkkkkkkk\\botTry1\\obj\\",
+        "projectPath": "D:\\tubes-stima\\Tubes1_bebas-aja\\src\\alternative-bots\\botTry1\\botTry1.csproj",
+        "packagesPath": "C:\\Users\\ASUS TUF GAMING F15\\.nuget\\packages\\",
+        "outputPath": "D:\\tubes-stima\\Tubes1_bebas-aja\\src\\alternative-bots\\botTry1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Alfansya\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\ASUS TUF GAMING F15\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
