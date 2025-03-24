@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <RootNamespace>FirstBot</RootNamespace>
+        <RootNamespace>LittleBoss</RootNamespace>
         <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <LangVersion>12.0</LangVersion>

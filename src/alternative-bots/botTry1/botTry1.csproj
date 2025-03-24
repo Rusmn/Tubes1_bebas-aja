@@ -2,8 +2,8 @@
     <PropertyGroup>
         <RootNamespace>botTry1</RootNamespace>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
-        <LangVersion>10.0</LangVersion>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>12.0</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Robocode.TankRoyale.BotApi" Version="0.30.0"/>

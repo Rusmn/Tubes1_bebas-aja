@@ -1,0 +1,10 @@
+{
+  "name": "LittleBoss",
+  "version": "1.0",
+  "authors": ["bebas aja"],
+  "description": "The boss",
+  "homepage": "",
+  "countryCodes": ["id"],
+  "platform": ".Net 8.0",
+  "programmingLang": "C# 12.0"
+}
