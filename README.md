@@ -48,7 +48,8 @@ src/
 │       ├── LittleBoss.csproj
 │       ├── LittleBoss.cmd
 │       └── LittleBoss.sh
-
+doc/
+├── bebasaja.pdf
 ```
 
 
