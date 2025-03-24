@@ -1,0 +1,44 @@
+# VS Code files
+.vscode/
+.vscode/*
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules/
+bower_components/
+
+# Build outputs
+dist/
+build/
+out/
+
+# Ignore build artifacts
+obj/
+bin/
+
+# But keep important files in obj and bin
+!obj/**/*.cmd
+!obj/**/*.cd
+!obj/**/*.csproj
+!obj/**/*.json
+!obj/**/*.sh
+!bin/**/*.cmd
+!bin/**/*.cd
+!bin/**/*.csproj
+!bin/**/*.json
+!bin/**/*.sh
+
+# OS specific files
+.DS_Store
+Thumbs.db
