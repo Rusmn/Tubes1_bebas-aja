@@ -40,13 +40,9 @@ public class LittleBoss : Bot
             }
             else // Kalo ada target
             {
-                // scan lagi
-                // SetBack(200);
-                // Console.Write("Mundur!");
                 SetRescan();
                 Go();
 
-                //Kalo di-scan kosong, set target kosong
                 targetX = -1;
                 targetY = -1;
             }
@@ -79,7 +75,6 @@ public class LittleBoss : Bot
             targetX = e.Bullet.X;
             targetY = e.Bullet.Y;
             Console.WriteLine("Target energy is low, charging!");
-            // Charge at the shooter for revenge
             RamTarget(targetX, targetY, DistanceTo(e.Bullet.X, e.Bullet.Y));
         } else {
             Forward(100);
