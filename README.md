@@ -1,7 +1,7 @@
 <h1 align="center"> Tugas Besar 1 IF2211 Strategi Algoritma </h1>
 <h1 align="center">  Pemanfaatan Algoritma <em> Greedy </em> dalam Pembuatan Bot Permainan <em> Robocode Tank Royale </em> </h1>
 
-
+![bebasaja](bebasajaphoto.jpg)
 
 ## Deskripsi Algoritma Greedy pada Program
 1. Greedy by Safe Zone
@@ -75,3 +75,6 @@ src/
 | 13523005 |            Muhammad Alfansya           |
 | 13523068 |        Muhammad Rusmin Nurwadin        |
 | 13523114 |             Guntara Hambali            |
+
+## Link Youtube Presentasi
+https://youtu.be/NjCDjsYdjYo
