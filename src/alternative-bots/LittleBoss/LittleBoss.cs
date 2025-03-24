@@ -55,14 +55,14 @@ public class LittleBoss : Bot
 
     public override void OnScannedBot(ScannedBotEvent e)
     {
-        targetX = e.X;
-        targetY = e.Y;
-        double distance = DistanceTo(targetX, targetY);
 
-        Console.WriteLine($"Scanned X: {targetX}, Y: {targetY}, Distance: {distance}");
+        double distance = DistanceTo(e.X, e.Y);
+        Console.WriteLine($"Scanned X: {e.X}, Y: {e.Y}, Distance: {distance}");
 
-        if (e.Energy < 500)
+        if (e.Energy < 70)
         {
+            targetX = e.X;
+            targetY = e.Y;
             Console.WriteLine("Target energy is low, charging!");
             RamTarget(targetX, targetY, distance);
         }
@@ -73,13 +73,16 @@ public class LittleBoss : Bot
         Console.WriteLine("REVENGE MODE ACTIVATED!");
         
 
-        targetX = e.Bullet.X;
-        targetY = e.Bullet.Y;
-        if (e.Energy < 500)
+
+        if (e.Energy < 70)
         {
+            targetX = e.Bullet.X;
+            targetY = e.Bullet.Y;
             Console.WriteLine("Target energy is low, charging!");
             // Charge at the shooter for revenge
             RamTarget(targetX, targetY, DistanceTo(e.Bullet.X, e.Bullet.Y));
+        } else {
+            Forward(100);
         }
 
 
@@ -87,7 +90,7 @@ public class LittleBoss : Bot
 
     public override void OnHitBot(HitBotEvent e)
     {
-        CoLittleBossnsole.WriteLine("Hit bot successfully!");
+        Console.WriteLine("Hit bot successfully!");
         SetRescan();
         Go();
     }
