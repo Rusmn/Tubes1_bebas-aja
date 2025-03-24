@@ -23,7 +23,7 @@ public class botRobot : Bot
         {
             // TurnGunRight(30);
             
-            TurnGunRight(15);
+            TurnGunRight(10);
             if (maju){
                 SetForward(40000);
                 SetTurnLeft(50);
@@ -41,35 +41,38 @@ public class botRobot : Bot
     {
         var distance = DistanceTo(e.X, e.Y);
         //1v1
-        // if(EnemyCount == 1)TurnGunLeft(GunBearingTo(e.X, e.Y));
-        // TurnGunLeft(GunBearingTo(e.X, e.Y));
+        // if(EnemyCount == 1){
+        //     TurnGunLeft(GunBearingTo(e.X, e.Y));
+        //     Fire(1);
+        // }
 
         // Slowing down kalo gaada musuh di jarak 500, let em fight sambil tembak kalo musuh lambat
         if (distance > 550) {
             MaxSpeed = 2;
-            // if(e.Speed < 3.5){
-            //     TurnGunLeft(GunBearingTo(e.X, e.Y));
-            //     Fire(1.5);
-            // } 
+            if(e.Speed < 3){
+                TurnGunLeft(GunBearingTo(e.X, e.Y));
+                Fire(1);
+            } 
         }
 
         // Kalo ada di jarak 400, tembak ke dia, agak perlambat
-        else if (distance < 450 && e.Speed <= 4) {
-            // TurnGunLeft(GunBearingTo(e.X, e.Y));
+        else if (distance < 450) {
             MaxSpeed = 4;
-            Fire(1);
+            if(e.Speed < 4){
+                TurnGunLeft(GunBearingTo(e.X, e.Y));
+                Fire(1);
+            } 
         }
         else {
-            
             // Warning musuh deket!
             if (distance <= 300){
                 TurnGunLeft(GunBearingTo(e.X, e.Y));
 
                 // Kalo deket banget, tembak pake 3
-                if(distance < 120)  {
+                if(distance < 200)  {
                     Fire(3);
                 }
-                // antara 120-200 tembak pake 2
+                // antara 200-300 tembak pake 2
                 else {
                     Fire(2);
                 }
@@ -91,7 +94,6 @@ public class botRobot : Bot
                     SetTurnLeft(120 - BearingTo(e.X, e.Y));
                     // Go();
                 }
-                
             }
         }
     }
@@ -144,11 +146,6 @@ public class botRobot : Bot
         MaxSpeed = 8;
         // Ngadep ke arah peluru ditembakin
         SetTurnLeft((e.Bullet.Direction + 180) % 360);
-        // Go();
-
-        // double distance = DistanceTo(bullet.X,bullet.Y);
-        // TargetSpeed = MaxSpeed;
-        // SetBack(200);
         Go();
     }
 }
