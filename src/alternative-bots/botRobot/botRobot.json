@@ -1,8 +1,8 @@
 {
-  "name": "botRobot",
+  "name": "bebas aja",
   "version": "1.0",
-  "authors": ["alfansya"],
-  "description": "masi coba coba",
+  "authors": ["Muhammad Alfansya, Muhammad Rusmin Nurwadin, Guntara Hambali"],
+  "description": "Greedy by Avoiding Enemies",
   "homepage": "",
   "countryCodes": ["id"],
   "platform": ".Net 9.0",

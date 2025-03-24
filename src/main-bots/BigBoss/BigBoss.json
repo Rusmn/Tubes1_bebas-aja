@@ -2,11 +2,9 @@
   "name": "bebas aja",
   "version": "1.0",
   "authors": ["Muhammad Alfansya, Muhammad Rusmin Nurwadin, Guntara Hambali"],
-  "description": "Greedy by safe zone",
+  "description": "Greedy by firing close enemy",
   "homepage": "",
-  "countryCodes": [
-    "id"
-  ],
-  "platform": ".Net 9.0",
-  "programmingLang": "C# 10.0"
+  "countryCodes": ["id"],
+  "platform": ".Net 8.0",
+  "programmingLang": "C# 12.0"
 }
